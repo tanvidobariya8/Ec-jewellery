@@ -1,6 +1,10 @@
 export type NavItem = {
   label: string;
   href: string;
+  /** Thumbnail shown in the desktop dropdown (category image from the admin). */
+  image?: string | null;
+  /** Sub-links shown in a dropdown (desktop) / nested list (mobile). */
+  children?: NavItem[];
 };
 
 export type NavGroup = {

@@ -46,7 +46,7 @@ app/
     page.tsx    home
     shop/[category]/  about/  contact/  faq/  education/  ring-size/
     blog/[slug]/  policies/[slug]/  custom-jewelry/  cart/  account/
-  (admin)/      (Phase 6) admin route group with its own layout
+  (admin)/      admin panel: admin/login + admin/(panel)/… (AdminShell guard, noindex). Admin UI lives in components/admin/, API in lib/api/admin.ts
   not-found.tsx · sitemap.ts · robots.ts
 components/
   ui/           generic primitives (Button, Container, FormField, Accordion, Stars…) — no business logic
@@ -58,11 +58,12 @@ components/
   shop/ product/  (Phase 2+)
 lib/
   utils.ts      cn() and small helpers
-  api/          typed fetch functions per BE module (catalog.ts, cart.ts…)
+  api/          typed fetch functions per BE module (catalog.ts, content.ts…); zod response schemas in schemas.ts
+  search-params/  nuqs parsers shared by server pages and client components (shop filters, product selections)
   validations/  zod schemas
   constants.ts  contact info, metals, shapes, ring sizes, nav
   currency.ts   Intl formatting + conversion
-  mock/         mock JSON until BE is ready
+  mock/         remaining mock data (home, about) until those BE endpoints are wired up
 store/          zustand stores
 types/          shared TS types
 hooks/          custom hooks (useXxx)
@@ -92,6 +93,7 @@ hooks/          custom hooks (useXxx)
 **Styling**
 
 - Tailwind utility classes only. Design tokens are defined in `app/globals.css` under `@theme` — use them (`bg-primary`, `text-gold`, `font-serif`), never raw hex values in JSX.
+- Gold for **text** must be `text-gold-dark` (on cream) or `text-gold-light` (on green) to meet WCAG AA contrast. Plain `text-gold` / `fill-gold` / `bg-gold` is only for icons, stars, lines and other decoration.
 - **The design is not final.** `Home page (2).pdf` is an early draft. Treat its colours, fonts, nav items and section layout as placeholders: keep them in tokens / `lib/constants.ts` and build sections as independent components so they can be reordered or restyled when the final mockup arrives.
 - Mobile-first (`base` → `sm` → `md` → `lg` → `xl`). Every page must work at 360px width with no horizontal scroll.
 - Luxury look: generous whitespace, uppercase tracked nav/labels, serif headings, subtle transitions (`transition-colors duration-300`). No heavy shadows or bright colours.
@@ -117,8 +119,8 @@ hooks/          custom hooks (useXxx)
 **Business rules from the client brief**
 
 - **No social media icons or links anywhere** (brief §12) — no dead links.
-- Floating WhatsApp button on every page → `https://wa.me/918487008481`.
-- Contact: `+91 8487008481`, `jewelleryecofriendly@gmail.com`; offices in India (Surat/Mumbai) and Germany.
+- Floating WhatsApp button on every page → `https://wa.me/910000000000` (dummy — real number pending from client).
+- Contact: `+91 00000 00000` (dummy — real number pending from client), `jewelleryecofriendly@gmail.com`; offices in India (Surat/Mumbai) and Germany.
 - Currencies: INR, EUR, USD, GBP. Ring sizes: US 3–14 in quarter steps. Metals: 10K/14K/18K Yellow/White/Rose gold + 950 Platinum. Stones: Moissanite (VVS DEF), Lab-Grown Diamond (Type IIa, IGI).
 
 **Quality gates (before every commit)**
@@ -127,3 +129,24 @@ hooks/          custom hooks (useXxx)
 - `npm run format` applied.
 - No `console.log` left in code; no commented-out code blocks.
 - Commit messages: `feat: …`, `fix: …`, `refactor: …`, `chore: …`, `docs: …`.
+
+<!-- BEGIN:nextjs-agent-feedback -->
+
+## Report Next.js feedback
+
+The project owner enabled `experimental.agentFeedback`, authorizing this feedback pass. When enabled, `next dev` writes this block and restores it if removed. Commit `AGENTS.md` with your work to keep the tree clean.
+
+During the current user request, retain anonymized facts as feedback candidates for meaningful or recurring Next.js issues:
+
+- Crashes, hangs, OOMs, or unexpected slowness
+- Incorrect behavior, output, errors, or diagnostics
+- Missing, unclear, or conflicting documentation
+- Unexpected CLI, codemod, Skill, or upgrade behavior and non-obvious workarounds
+
+Continue the current user request without reporting immediately. Routine debugging is not feedback. Verify changes before retaining them as feedback candidates. Never retain code, logs, paths, URLs, secrets, personal information, or project-specific data.
+
+Retain qualifying friction even if it is later fixed or worked around; record the final outcome during the reporting pass.
+
+Before the final response, run one reporting pass. If candidates remain, from this file's directory run `npx --no-install next internal agent-feedback-instructions` once without piping or truncating its output. Follow its output or error guidance. If a network sandbox blocks it, retry with network access; if it still returns no output, continue normally.
+
+<!-- END:nextjs-agent-feedback -->

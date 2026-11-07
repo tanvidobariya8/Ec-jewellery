@@ -40,7 +40,7 @@ export default function RingSizePage() {
           <table className="w-full min-w-[420px] text-center text-sm">
             <caption className="sr-only">Ring size conversion chart</caption>
             <thead>
-              <tr className="border-b border-border text-xs tracking-label text-gold uppercase">
+              <tr className="border-b border-border text-xs tracking-label text-gold-dark uppercase">
                 <th scope="col" className="py-3 font-normal">
                   US size
                 </th>

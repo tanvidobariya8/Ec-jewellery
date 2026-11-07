@@ -22,7 +22,9 @@ export function ReviewStrip({ reviews }: ReviewStripProps) {
                 </blockquote>
                 <figcaption className="mt-6 text-xs tracking-label text-muted uppercase">
                   {review.author}
-                  {review.product && <span className="mt-1 block text-gold">{review.product}</span>}
+                  {review.product && (
+                    <span className="mt-1 block text-gold-dark">{review.product}</span>
+                  )}
                 </figcaption>
               </figure>
             </li>

@@ -3,7 +3,7 @@ import { Footer } from "@/components/layout/Footer";
 import { Header } from "@/components/layout/Header";
 import { WhatsAppButton } from "@/components/layout/WhatsAppButton";
 
-/** Storefront shell: every customer-facing page. (Admin will get its own layout.) */
+/** Storefront shell: every customer-facing page. (Admin has its own layout in `app/(admin)`.) */
 export default function SiteLayout({ children }: { children: React.ReactNode }) {
   return (
     <>

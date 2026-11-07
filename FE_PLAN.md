@@ -9,7 +9,7 @@ Backend lives in `../be` (see `../be/BE_PLAN.md`). The FE never calculates final
 
 | #   | Question                                                                                          | Current assumption                                                                           |
 | --- | ------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- |
-| 1   | Shopify (as in brief) or custom build?                                                            | Custom Next.js + own backend                                                                 |
+| 1   | Shopify (as in brief) or custom build?                                                            | ✅ **Decided: custom build**                                                                 |
 | 2   | Main nav categories: draft mockup (Rings / Chains / Earrings / Bracelets) vs brief (8 categories) | Not decided — keep nav items in `lib/constants.ts` so they are easy to change                |
 | 5   | Final design / mockup                                                                             | **Not final.** `Home page (2).pdf` is an early draft only; final design still to come        |
 | 3   | Product photos & names: the supplied catalogue (Vincent van Hees) belongs to another brand        | Used only as a data-structure reference until the client supplies their own photos and names |
@@ -98,7 +98,7 @@ fe/
 | **Education / Ring Size**  | Diamond guide (4Cs, lab vs mined, moissanite), printable ring-size chart                                                                                                                                                    | §6, §13         |
 | **Blog**                   | 4 articles from brief (start as MDX or BE content)                                                                                                                                                                          | §6              |
 | **About & Sustainability** | History, mission, vision, USPs, team (4 groups), India & Germany offices                                                                                                                                                    | §1, §2, §5      |
-| **Contact**                | Form, email `jewelleryecofriendly@gmail.com`, phone/WhatsApp `+91 8487008481`, offices                                                                                                                                      | §3              |
+| **Contact**                | Form, email `jewelleryecofriendly@gmail.com`, phone/WhatsApp `+91 00000 00000` (dummy — real number pending from client), offices                                                                                           | §3              |
 | **FAQ**                    | 4 FAQs (accordion)                                                                                                                                                                                                          | §11             |
 | **Policies**               | Shipping, 30-day returns, privacy, terms                                                                                                                                                                                    | §13             |
 | **Cart / Checkout**        | Line items show configuration; address, shipping, payment (Razorpay for INR, Stripe for others)                                                                                                                             | §15             |
@@ -107,7 +107,7 @@ fe/
 Global rules:
 
 - **No social media icons or links anywhere** (§12).
-- **Floating WhatsApp button** on every page → `https://wa.me/918487008481` (§15).
+- **Floating WhatsApp button** on every page → `https://wa.me/910000000000` (dummy — real number pending from client) (§15).
 
 ---
 

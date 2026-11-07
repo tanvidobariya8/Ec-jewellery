@@ -15,7 +15,7 @@ export function CustomBanner() {
             className="aspect-[4/3] md:aspect-auto md:h-full"
           />
           <div className="px-6 py-12 sm:px-12">
-            <p className="mb-4 text-xs tracking-label text-gold uppercase">
+            <p className="mb-4 text-xs tracking-label text-gold-light uppercase">
               {CUSTOM_BANNER.eyebrow}
             </p>
             <h2 className="text-3xl text-primary-foreground sm:text-4xl">

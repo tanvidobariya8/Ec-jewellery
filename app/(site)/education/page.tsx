@@ -76,7 +76,7 @@ export default function EducationPage() {
           <div className="overflow-x-auto">
             <table className="w-full min-w-[480px] text-left text-sm">
               <thead>
-                <tr className="border-b border-border text-xs tracking-label text-gold uppercase">
+                <tr className="border-b border-border text-xs tracking-label text-gold-dark uppercase">
                   <th scope="col" className="py-3 pr-4 font-normal" />
                   <th scope="col" className="py-3 pr-4 font-normal">
                     Lab-grown diamond

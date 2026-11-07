@@ -64,7 +64,9 @@ export default function AboutPage() {
             {OFFICES.map((office) => (
               <li key={office.country} className="bg-surface/40 p-8 text-center">
                 <h3 className="text-2xl">{office.country}</h3>
-                <p className="mt-2 text-xs tracking-label text-gold uppercase">{office.city}</p>
+                <p className="mt-2 text-xs tracking-label text-gold-dark uppercase">
+                  {office.city}
+                </p>
                 <p className="mt-4 text-sm text-muted">{office.role}</p>
               </li>
             ))}

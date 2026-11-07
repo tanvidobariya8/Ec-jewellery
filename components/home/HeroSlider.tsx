@@ -50,7 +50,9 @@ export function HeroSlider({ slides }: HeroSliderProps) {
             >
               <Container className="grid items-center gap-10 md:grid-cols-2">
                 <div className="order-2 md:order-1">
-                  <p className="mb-4 text-xs tracking-label text-gold uppercase">{slide.eyebrow}</p>
+                  <p className="mb-4 text-xs tracking-label text-gold-dark uppercase">
+                    {slide.eyebrow}
+                  </p>
                   {index === 0 ? (
                     <h1 className="text-4xl leading-tight sm:text-5xl lg:text-6xl">
                       {slide.heading}

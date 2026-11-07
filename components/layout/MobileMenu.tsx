@@ -6,7 +6,8 @@ import { Dialog } from "radix-ui";
 import { useState } from "react";
 
 import { CurrencySwitcher } from "@/components/layout/CurrencySwitcher";
-import { CONTACT, MAIN_NAV, whatsappLink } from "@/lib/constants";
+import { CONTACT, whatsappLink } from "@/lib/constants";
+import type { NavItem } from "@/types/content";
 
 const SECONDARY_LINKS = [
   { label: "Custom Jewellery", href: "/custom-jewelry" },
@@ -17,7 +18,7 @@ const SECONDARY_LINKS = [
   { label: "My Account", href: "/account" },
 ];
 
-export function MobileMenu() {
+export function MobileMenu({ items }: { items: NavItem[] }) {
   const [open, setOpen] = useState(false);
   const close = () => setOpen(false);
 
@@ -34,7 +35,9 @@ export function MobileMenu() {
         <Dialog.Overlay className="fixed inset-0 z-50 bg-foreground/30" />
         <Dialog.Content className="fixed inset-y-0 left-0 z-50 flex w-[85vw] max-w-sm flex-col overflow-y-auto bg-background p-6">
           <div className="mb-8 flex items-center justify-between">
-            <Dialog.Title className="text-xs tracking-label text-gold uppercase">Menu</Dialog.Title>
+            <Dialog.Title className="text-xs tracking-label text-gold-dark uppercase">
+              Menu
+            </Dialog.Title>
             <Dialog.Close
               aria-label="Close menu"
               className="inline-flex size-10 items-center justify-center"
@@ -46,7 +49,7 @@ export function MobileMenu() {
 
           <nav aria-label="Mobile">
             <ul className="space-y-1 border-b border-border pb-6">
-              {MAIN_NAV.map((item) => (
+              {items.map((item) => (
                 <li key={item.href}>
                   <Link
                     href={item.href}
@@ -55,6 +58,21 @@ export function MobileMenu() {
                   >
                     {item.label}
                   </Link>
+                  {item.children && (
+                    <ul className="mb-2 ml-1 space-y-1 border-l border-border pl-4">
+                      {item.children.map((child) => (
+                        <li key={child.href}>
+                          <Link
+                            href={child.href}
+                            onClick={close}
+                            className="block py-1.5 text-xs tracking-label text-foreground uppercase"
+                          >
+                            {child.label}
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
                 </li>
               ))}
             </ul>
