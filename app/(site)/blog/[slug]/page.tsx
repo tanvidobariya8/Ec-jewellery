@@ -4,37 +4,40 @@ import { notFound } from "next/navigation";
 
 import { ContentSections } from "@/components/content/ContentSections";
 import { Container } from "@/components/ui/Container";
-import { BLOG_POSTS, getBlogPost } from "@/lib/mock/blog";
+import { getBlogPost, getBlogPosts } from "@/lib/api/content";
 
-export function generateStaticParams() {
-  return BLOG_POSTS.map((post) => ({ slug: post.slug }));
+export async function generateStaticParams() {
+  const posts = await getBlogPosts();
+  return posts.map((post) => ({ slug: post.slug }));
 }
 
 export async function generateMetadata({ params }: PageProps<"/blog/[slug]">): Promise<Metadata> {
   const { slug } = await params;
-  const post = getBlogPost(slug);
+  const post = await getBlogPost(slug);
   if (!post) return {};
+  const title = post.seoTitle ?? post.title;
+  const description = post.seoDescription ?? post.excerpt ?? undefined;
   return {
-    title: post.title,
-    description: post.excerpt,
-    openGraph: { type: "article", title: post.title, description: post.excerpt },
+    title,
+    description,
+    openGraph: { type: "article", title, description },
   };
 }
 
 export default async function BlogPostPage({ params }: PageProps<"/blog/[slug]">) {
   const { slug } = await params;
-  const post = getBlogPost(slug);
+  const post = await getBlogPost(slug);
   if (!post) notFound();
 
   return (
     <article>
       <header className="border-b border-border bg-surface/40 py-14">
         <Container className="max-w-3xl text-center">
-          <p className="text-xs tracking-label text-gold uppercase">
+          <p className="text-xs tracking-label text-gold-dark uppercase">
             Journal · {post.readingMinutes} min read
           </p>
           <h1 className="mt-4 text-3xl leading-tight sm:text-4xl">{post.title}</h1>
-          <p className="mt-5 text-muted">{post.excerpt}</p>
+          {post.excerpt && <p className="mt-5 text-muted">{post.excerpt}</p>}
         </Container>
       </header>
       <Container className="max-w-3xl py-16">

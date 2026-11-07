@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import { PageHeader } from "@/components/content/PageHeader";
 import { Accordion } from "@/components/ui/Accordion";
 import { Container } from "@/components/ui/Container";
-import { FAQS } from "@/lib/mock/faqs";
+import { getFaqs } from "@/lib/api/content";
 
 export const metadata: Metadata = {
   title: "Frequently Asked Questions",
@@ -11,17 +11,19 @@ export const metadata: Metadata = {
     "Answers about lab-grown diamonds, certificates, production times and custom designs.",
 };
 
-const faqJsonLd = {
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
-  mainEntity: FAQS.map((faq) => ({
-    "@type": "Question",
-    name: faq.question,
-    acceptedAnswer: { "@type": "Answer", text: faq.answer },
-  })),
-};
+export default async function FaqPage() {
+  const faqs = await getFaqs();
 
-export default function FaqPage() {
+  const faqJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: faqs.map((faq) => ({
+      "@type": "Question",
+      name: faq.question,
+      acceptedAnswer: { "@type": "Answer", text: faq.answer },
+    })),
+  };
+
   return (
     <>
       <script
@@ -31,7 +33,7 @@ export default function FaqPage() {
       <PageHeader eyebrow="Help" title="Frequently Asked Questions" />
       <Container className="max-w-3xl py-16">
         <Accordion
-          items={FAQS.map((faq) => ({
+          items={faqs.map((faq) => ({
             id: faq.id,
             title: faq.question,
             content: <p>{faq.answer}</p>,

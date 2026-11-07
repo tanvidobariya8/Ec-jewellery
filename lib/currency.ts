@@ -23,3 +23,16 @@ export function formatPrice(amount: number, currency: CurrencyCode) {
 export function convertFromInr(amountInr: number, rate: number) {
   return amountInr * rate;
 }
+
+/** BE stores money as integer paise (₹1 = 100 paise). */
+export const paiseToRupees = (paise: number) => paise / 100;
+export const rupeesToPaise = (rupees: number) => Math.round(rupees * 100);
+
+/** "₹6,450.50" — admin screens show paise-exact amounts. */
+export function formatInrPaise(paise: number) {
+  return new Intl.NumberFormat("en-IN", {
+    style: "currency",
+    currency: "INR",
+    maximumFractionDigits: 2,
+  }).format(paiseToRupees(paise));
+}

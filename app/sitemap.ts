@@ -1,8 +1,8 @@
 import type { MetadataRoute } from "next";
 
-import { CATEGORIES, SITE } from "@/lib/constants";
-import { BLOG_POSTS } from "@/lib/mock/blog";
-import { POLICIES } from "@/lib/mock/policies";
+import { getCategories, getProductSlugs } from "@/lib/api/catalog";
+import { getBlogPosts, POLICY_SLUGS } from "@/lib/api/content";
+import { SITE } from "@/lib/constants";
 
 const STATIC_ROUTES = [
   "",
@@ -16,12 +16,30 @@ const STATIC_ROUTES = [
   "/blog",
 ];
 
-export default function sitemap(): MetadataRoute.Sitemap {
+/** API-driven URLs; an empty list if the API is unavailable (the sitemap must never fail). */
+async function dynamicRoutes(): Promise<string[]> {
+  try {
+    const [categories, productSlugs, posts] = await Promise.all([
+      getCategories(),
+      getProductSlugs(),
+      getBlogPosts(),
+    ]);
+    return [
+      ...categories.map((category) => `/shop/${category.slug}`),
+      ...productSlugs.map((slug) => `/product/${slug}`),
+      ...posts.map((post) => `/blog/${post.slug}`),
+    ];
+  } catch (error) {
+    console.error("sitemap: API unavailable, serving static routes only", error);
+    return [];
+  }
+}
+
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const urls = [
     ...STATIC_ROUTES,
-    ...CATEGORIES.map((category) => `/shop/${category.slug}`),
-    ...BLOG_POSTS.map((post) => `/blog/${post.slug}`),
-    ...POLICIES.map((policy) => `/policies/${policy.slug}`),
+    ...POLICY_SLUGS.map((slug) => `/policies/${slug}`),
+    ...(await dynamicRoutes()),
   ];
   return urls.map((path) => ({ url: `${SITE.url}${path}` }));
 }

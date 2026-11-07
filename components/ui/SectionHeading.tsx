@@ -19,7 +19,7 @@ export function SectionHeading({
 }: SectionHeadingProps) {
   return (
     <div className={cn("mb-10", align === "center" && "text-center", className)}>
-      {eyebrow && <p className="mb-3 text-xs tracking-label text-gold uppercase">{eyebrow}</p>}
+      {eyebrow && <p className="mb-3 text-xs tracking-label text-gold-dark uppercase">{eyebrow}</p>}
       <Heading className="text-3xl sm:text-4xl">{title}</Heading>
       <span
         aria-hidden="true"

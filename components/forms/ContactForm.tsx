@@ -6,6 +6,7 @@ import { toast } from "sonner";
 
 import { Button } from "@/components/ui/Button";
 import { FormField, Input, Textarea } from "@/components/ui/FormField";
+import { userMessage } from "@/lib/api/client";
 import { submitContactMessage } from "@/lib/api/contact";
 import { CONTACT } from "@/lib/constants";
 import { contactSchema, type ContactFormValues } from "@/lib/validations/contact";
@@ -26,8 +27,10 @@ export function ContactForm() {
       await submitContactMessage(values);
       toast.success("Thank you — we will get back to you shortly.");
       reset();
-    } catch {
-      toast.error(`We couldn't send your message. Please email us at ${CONTACT.email}.`);
+    } catch (error) {
+      toast.error(
+        userMessage(error, `We couldn't send your message. Please email us at ${CONTACT.email}.`),
+      );
     }
   };
 

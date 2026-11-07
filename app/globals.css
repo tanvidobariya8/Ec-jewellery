@@ -17,7 +17,10 @@
 
   --color-foreground: #1f1f1f;
   --color-muted: #5f5a52;
+  /* gold: icons, lines, stars (decorative). Text must use gold-dark / gold-light (WCAG AA ≥ 4.5:1). */
   --color-gold: #a8875a;
+  --color-gold-dark: #87683d; /* small text on cream backgrounds — 4.7:1 */
+  --color-gold-light: #e3d2b0; /* small text on primary green — 4.6:1 */
 
   --color-whatsapp: #25d366;
   --color-danger: #b42318;

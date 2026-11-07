@@ -1,19 +1,29 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 
-import { ComingSoon } from "@/components/content/ComingSoon";
+import { ProductListing } from "@/components/shop/ProductListing";
+import { ProductListingSkeleton } from "@/components/shop/ProductListingSkeleton";
+import { ShopTitle } from "@/components/shop/ShopTitle";
+import { Container } from "@/components/ui/Container";
+import { loadShopSearchParams } from "@/lib/search-params/shop";
 
 export const metadata: Metadata = {
   title: "Shop All Jewellery",
   description: "Lab-grown diamond and moissanite rings, earrings, chains and bracelets.",
 };
 
-// TODO(Phase 2): product grid with carat, stone, shape, metal and price filters (nuqs).
-export default function ShopPage() {
+async function ShopResults({ searchParams }: Pick<PageProps<"/shop">, "searchParams">) {
+  const filters = await loadShopSearchParams(searchParams);
+  return <ProductListing basePath="/shop" filters={filters} />;
+}
+
+export default function ShopPage({ searchParams }: PageProps<"/shop">) {
   return (
-    <ComingSoon
-      eyebrow="Shop"
-      title="Our collection is launching soon"
-      description="We are photographing our first collection. Meanwhile, tell us what you are looking for and we will share designs and prices directly."
-    />
+    <Container className="py-8">
+      <ShopTitle title="All Jewellery" crumbs={[{ label: "Home", href: "/" }]} />
+      <Suspense fallback={<ProductListingSkeleton />}>
+        <ShopResults searchParams={searchParams} />
+      </Suspense>
+    </Container>
   );
 }

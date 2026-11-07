@@ -14,11 +14,16 @@ export const SITE = {
   announcement: "Lab-grown diamonds & moissanite · Shipping from India & Germany",
 } as const;
 
-const WHATSAPP_NUMBER = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? "918487008481";
+// TODO(client): DUMMY number — replace with the real phone/WhatsApp number before launch.
+// Change it here only (digits with country code, no "+"), plus the display text below.
+const PHONE_NUMBER = "910000000000";
+const PHONE_DISPLAY = "+91 00000 00000";
+
+const WHATSAPP_NUMBER = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? PHONE_NUMBER;
 
 export const CONTACT = {
-  phoneDisplay: "+91 84870 08481",
-  phoneHref: "tel:+918487008481",
+  phoneDisplay: PHONE_DISPLAY,
+  phoneHref: `tel:+${PHONE_NUMBER}`,
   email: "jewelleryecofriendly@gmail.com",
   emailHref: "mailto:jewelleryecofriendly@gmail.com",
   whatsappHref: `https://wa.me/${WHATSAPP_NUMBER}`,
@@ -141,6 +146,13 @@ export const STONE_TYPES: StoneType[] = [
   { code: "MOISSANITE", name: "Moissanite", grade: "VVS · DEF colour" },
 ];
 
+/** Short stone names keyed by BE stone type code. */
+export const STONE_LABELS: Record<"LAB_DIAMOND" | "MOISSANITE" | "PEARL", string> = {
+  LAB_DIAMOND: "Lab diamond",
+  MOISSANITE: "Moissanite",
+  PEARL: "Pearl",
+};
+
 /** US ring sizes 3–14 in quarter steps. */
 export const RING_SIZES: number[] = Array.from({ length: 45 }, (_, i) => 3 + i * 0.25);
 
@@ -158,3 +170,18 @@ export const LEAD_TIMES = {
   craftingDays: "7–10 business days",
   deliveryDays: "4–7 business days",
 } as const;
+
+/* ------------------------------------------------------------------ */
+/* Admin panel                                                        */
+/* ------------------------------------------------------------------ */
+
+export const ADMIN_NAV = [
+  { href: "/admin", label: "Dashboard" },
+  { href: "/admin/products", label: "Products" },
+  { href: "/admin/categories", label: "Categories" },
+  { href: "/admin/collections", label: "Collections" },
+  { href: "/admin/pricing", label: "Metal rates & margin" },
+  { href: "/admin/stone-prices", label: "Stone prices" },
+] as const;
+
+export type AdminHref = (typeof ADMIN_NAV)[number]["href"];
