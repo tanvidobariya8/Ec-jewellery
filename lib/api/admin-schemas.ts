@@ -49,6 +49,27 @@ export const adminCategorySchema = z.object({
   productCount: z.number().optional(),
 });
 
+export const adminStyleSchema = z.object({
+  id: z.string(),
+  name: z.string(),
+  slug: z.string(),
+  sort: z.number(),
+  image: z.string().nullable(),
+  moissaniteImage: z.string().nullable(),
+  moissaniteSort: z.number(),
+  productCount: z.number().optional(),
+});
+
+export const adminShapeSchema = z.object({
+  id: z.string(),
+  name: z.string(),
+  slug: z.string(),
+  sort: z.number(),
+  image: z.string().nullable(),
+  description: z.string().nullable(),
+  productCount: z.number().optional(),
+});
+
 export const adminCollectionSchema = z.object({
   id: z.string(),
   name: z.string(),
@@ -162,6 +183,8 @@ export const uploadSignatureSchema = z.object({
 export type AuthUser = z.infer<typeof authUserSchema>;
 export type Lookups = z.infer<typeof lookupsSchema>;
 export type AdminCategory = z.infer<typeof adminCategorySchema>;
+export type AdminStyle = z.infer<typeof adminStyleSchema>;
+export type AdminShape = z.infer<typeof adminShapeSchema>;
 export type AdminCollection = z.infer<typeof adminCollectionSchema>;
 export type AdminMetal = z.infer<typeof adminMetalSchema>;
 export type StonePrice = z.infer<typeof stonePriceSchema>;

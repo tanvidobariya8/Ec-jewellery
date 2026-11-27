@@ -2,6 +2,8 @@ import { z } from "zod";
 
 import {
   adminCategorySchema,
+  adminStyleSchema,
+  adminShapeSchema,
   adminCollectionSchema,
   adminMetalSchema,
   adminProductRowSchema,
@@ -17,6 +19,8 @@ import { ApiError, apiFetch, apiGet, apiSend, toQuery, userMessage } from "@/lib
 import { paginated } from "@/lib/api/schemas";
 import type {
   CategoryPayload,
+  StylePayload,
+  ShapePayload,
   CollectionPayload,
   ProductPayload,
   StonePricePayload,
@@ -59,6 +63,20 @@ export const updateCategory = (id: string, body: Partial<CategoryPayload>) =>
   apiSend(`/admin/categories/${id}`, adminCategorySchema, json("PATCH", body));
 export const deleteCategory = (id: string) =>
   apiFetch<void>(`/admin/categories/${id}`, json("DELETE"));
+
+export const getStyles = () => apiGet("/admin/styles", z.array(adminStyleSchema));
+export const createStyle = (body: StylePayload) =>
+  apiSend("/admin/styles", adminStyleSchema, json("POST", body));
+export const updateStyle = (id: string, body: Partial<StylePayload>) =>
+  apiSend(`/admin/styles/${id}`, adminStyleSchema, json("PATCH", body));
+export const deleteStyle = (id: string) => apiFetch<void>(`/admin/styles/${id}`, json("DELETE"));
+
+export const getShapes = () => apiGet("/admin/shapes", z.array(adminShapeSchema));
+export const createShape = (body: ShapePayload) =>
+  apiSend("/admin/shapes", adminShapeSchema, json("POST", body));
+export const updateShape = (id: string, body: Partial<ShapePayload>) =>
+  apiSend(`/admin/shapes/${id}`, adminShapeSchema, json("PATCH", body));
+export const deleteShape = (id: string) => apiFetch<void>(`/admin/shapes/${id}`, json("DELETE"));
 
 export const getCollections = () => apiGet("/admin/collections", z.array(adminCollectionSchema));
 export const createCollection = (body: CollectionPayload) =>

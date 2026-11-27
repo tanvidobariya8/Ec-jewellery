@@ -2,19 +2,28 @@ export type CurrencyCode = "INR" | "EUR" | "USD" | "GBP";
 
 export type ShapeSlug =
   | "dutch-marquise"
-  | "round"
+  | "marquise"
   | "oval"
-  | "emerald"
+  | "cushion"
   | "pear"
   | "radiant"
-  | "cushion"
+  | "emerald"
+  | "round"
   | "rose-cut"
+  | "old-cut"
+  | "portuguese"
+  | "coffin"
   | "hexagon"
-  | "lozenge";
+  | "lozenge"
+  | "heart"
+  | "princess";
 
 export type Shape = {
   slug: ShapeSlug;
   name: string;
+  /** Stone photo in `public/images/shapes`. */
+  image: string;
+  description: string;
 };
 
 export type Category = {

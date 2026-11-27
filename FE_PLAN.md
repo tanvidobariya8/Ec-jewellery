@@ -29,7 +29,7 @@ Starting values (from the draft mockup):
 | Token             | Value                      | Use                                        |
 | ----------------- | -------------------------- | ------------------------------------------ |
 | `--color-primary` | `#3a6447` (deep green)     | Top bar, buttons, headings                 |
-| `--color-bg`      | `#f8f5f0` (cream)          | Page background                            |
+| `--color-bg`      | `#fdfcfa` (near-white)     | Page background                            |
 | `--color-surface` | `#efe6d8` / `#e8e1d6`      | Image placeholders, cards                  |
 | `--color-gold`    | `#a8875a`                  | Eyebrow text, accents                      |
 | `--color-text`    | `#1f1f1f`                  | Body text                                  |
@@ -67,7 +67,7 @@ fe/
 │   └── not-found.tsx
 ├── components/
 │   ├── layout/   Header, Nav, MobileMenu, Footer, AnnouncementBar, WhatsAppButton, CurrencySwitcher
-│   ├── home/     HeroSlider, CategoryGrid, ShapeFinder, CustomBanner, ReviewStrip, TrustBadges
+│   ├── home/     HeroBanner, ShopByStyle, ShopByShape, CategoryGrid, CustomBanner, ReviewStrip, TrustBadges
 │   ├── shop/     FilterSidebar, ProductCard, ProductGrid, SortSelect, Pagination
 │   ├── product/  Gallery, Video360, MetalSelector, StoneSelector, CaratSelector, RingSizeSelector, PriceBox, Specs
 │   ├── forms/    CustomInquiryForm, ContactForm, ImageUpload, OtpInput

@@ -23,8 +23,17 @@ export const categorySchema = z.object({
   parentSlug: z.string().nullable(),
 });
 
-export const shapeSchema = z.object({ slug: z.string(), name: z.string() });
-export const styleSchema = slugName;
+export const shapeSchema = slugName.extend({
+  sort: z.number().optional(),
+  image: z.string().nullable().optional(),
+  description: z.string().nullable().optional(),
+});
+export const styleSchema = slugName.extend({
+  sort: z.number().optional(),
+  image: z.string().nullable().optional(),
+  moissaniteImage: z.string().nullable().optional(),
+  moissaniteSort: z.number().optional(),
+});
 
 export const stoneTypeCodeSchema = z.enum(["LAB_DIAMOND", "MOISSANITE", "PEARL"]);
 
@@ -41,6 +50,8 @@ export const productListItemSchema = z.object({
   stoneTypes: z.array(stoneTypeCodeSchema),
   isFeatured: z.boolean(),
   isBestSeller: z.boolean(),
+  /** Cheapest configuration in whole INR (BE-computed, no GST); null = price on request. */
+  fromPriceInr: z.number().nullable().default(null),
 });
 
 export const productDetailSchema = z.object({

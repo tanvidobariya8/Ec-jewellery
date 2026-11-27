@@ -12,13 +12,14 @@ export type NavGroup = {
   links: NavItem[];
 };
 
-export type HeroSlide = {
-  id: string;
+export type HeroBannerContent = {
   eyebrow: string;
   heading: string;
   subtext: string;
   cta: NavItem;
   imageLabel: string;
+  /** Path under /public (e.g. "/images/hero/…"); a placeholder shows when omitted. */
+  image?: string;
 };
 
 export type Review = {

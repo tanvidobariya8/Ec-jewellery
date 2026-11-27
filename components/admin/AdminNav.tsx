@@ -1,6 +1,15 @@
 "use client";
 
-import { Gem, LayoutDashboard, Layers, Package, Scale, Tags } from "lucide-react";
+import {
+  Diamond,
+  Gem,
+  LayoutDashboard,
+  Layers,
+  Package,
+  Scale,
+  Sparkles,
+  Tags,
+} from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
@@ -12,6 +21,8 @@ const ICONS: Record<AdminHref, typeof Gem> = {
   "/admin/products": Package,
   "/admin/categories": Tags,
   "/admin/collections": Layers,
+  "/admin/styles": Sparkles,
+  "/admin/shapes": Diamond,
   "/admin/pricing": Scale,
   "/admin/stone-prices": Gem,
 };

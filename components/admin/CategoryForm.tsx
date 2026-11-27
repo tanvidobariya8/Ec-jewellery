@@ -12,12 +12,16 @@ import { categoryDefaults, categorySchema, type CategoryValues } from "@/lib/val
 
 type CategoryFormProps = {
   category?: AdminCategory;
-  /** Possible parents (the category itself is excluded). */
+  /** All categories; only top-level ones are offered as parents (the menu has two levels). */
   parents: AdminCategory[];
   onSubmit: (values: CategoryValues) => Promise<void>;
 };
 
 export function CategoryForm({ category, parents, onSubmit }: CategoryFormProps) {
+  const hasChildren = !!category && parents.some((p) => p.parentId === category.id);
+  const parentOptions = parents
+    .filter((p) => p.parentId === null && p.id !== category?.id)
+    .map((p) => ({ value: p.id, label: p.name }));
   const {
     register,
     control,
@@ -42,21 +46,30 @@ export function CategoryForm({ category, parents, onSubmit }: CategoryFormProps)
         />
       </FormField>
       <FormField id="cat-parent" label="Parent category" optional>
-        <Controller
-          control={control}
-          name="parentId"
-          render={({ field }) => (
-            <AdminSelect
-              id="cat-parent"
-              value={field.value}
-              onChange={field.onChange}
-              emptyLabel="None (top level)"
-              options={parents
-                .filter((p) => p.id !== category?.id)
-                .map((p) => ({ value: p.id, label: p.name }))}
+        {hasChildren ? (
+          <p className="text-sm text-muted">
+            Top level — this category has sub-categories, so it stays in the main menu.
+          </p>
+        ) : (
+          <>
+            <Controller
+              control={control}
+              name="parentId"
+              render={({ field }) => (
+                <AdminSelect
+                  id="cat-parent"
+                  value={field.value}
+                  onChange={field.onChange}
+                  emptyLabel="None (top level)"
+                  options={parentOptions}
+                />
+              )}
             />
-          )}
-        />
+            <p className="text-xs text-muted">
+              None = its own item in the shop menu. A parent = shown in that item&apos;s dropdown.
+            </p>
+          </>
+        )}
       </FormField>
       <FormField id="cat-sort" label="Sort order" error={errors.sort?.message}>
         <Input

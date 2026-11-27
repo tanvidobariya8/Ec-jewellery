@@ -23,7 +23,7 @@ Next.js 16 (App Router) · React 19 · TypeScript (strict) · Tailwind CSS 4 · 
 | --------------------- | ---------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
 | Class names           | `clsx` + `tailwind-merge`                            | Always use `cn()` from `@/lib/utils`. No string concatenation of classes.                                                                |
 | Component variants    | `class-variance-authority`                           | Every reusable UI component with variants (Button, Badge…) uses `cva`.                                                                   |
-| Icons                 | `lucide-react`                                       | Only icon library. No inline SVG except logo/brand art and stone-shape outlines (`ShapeIcon`).                                           |
+| Icons                 | `lucide-react`                                       | Only icon library. No inline SVG except logo/brand art.                                           |
 | Accessible primitives | `radix-ui`                                           | Dialog, Accordion, Select, Tabs, Popover, RadioGroup, Tooltip, Slot. Never hand-roll these. Import: `import { Dialog } from "radix-ui"`. |
 | Carousel / sliders    | `embla-carousel-react` (+ `embla-carousel-autoplay`) | Hero slider, product gallery, review strip.                                                                                              |
 | Forms                 | `react-hook-form` + `zod` + `@hookform/resolvers`    | Every form. Schema in `lib/validations/*.ts`, type via `z.infer`.                                                                        |
@@ -51,7 +51,7 @@ app/
 components/
   ui/           generic primitives (Button, Container, FormField, Accordion, Stars…) — no business logic
   layout/       Header, MainNav, MobileMenu, Footer, Logo, AnnouncementBar, WhatsAppButton, CurrencySwitcher
-  home/         home page sections (HeroSlider, CategoryGrid, ShapeFinder, CustomBanner, ReviewStrip, TrustBadges)
+  home/         home page sections (HeroBanner, ShopByStyle, ShopByShape, BestSellers, ProductCarousel, WhyLabGrown, CategoryGrid, CustomBanner, ReviewStrip, TrustBadges)
   content/      shared page pieces (PageHeader, ContentSections, ComingSoon, PrintButton)
   forms/        feature forms (ContactForm…)
   providers/    client providers (React Query, nuqs, Toaster)

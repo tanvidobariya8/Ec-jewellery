@@ -4,6 +4,7 @@ import Link from "next/link";
 import { ImagePlaceholder } from "@/components/ui/ImagePlaceholder";
 import type { ProductListItem } from "@/lib/api/schemas";
 import { STONE_LABELS } from "@/lib/constants";
+import { formatPrice } from "@/lib/currency";
 import { isOptimizedImage } from "@/lib/images";
 
 type ProductCardProps = {
@@ -41,6 +42,16 @@ export function ProductCard({ product }: ProductCardProps) {
         {product.name}
       </h3>
       {stones && <p className="mt-1 text-xs text-muted">{stones}</p>}
+      <p className="mt-2 text-sm text-foreground">
+        {product.fromPriceInr !== null ? (
+          <>
+            <span className="text-xs text-muted">From </span>
+            <span className="font-medium">{formatPrice(product.fromPriceInr, "INR")}</span>
+          </>
+        ) : (
+          <span className="text-xs text-muted">Price on request</span>
+        )}
+      </p>
     </Link>
   );
 }
