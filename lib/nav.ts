@@ -2,12 +2,14 @@ import { getCategories } from "@/lib/api/catalog";
 import { MAIN_NAV } from "@/lib/constants";
 import type { NavItem } from "@/types/content";
 
-const CATEGORY_HREF = /^\/shop\/([^/?]+)$/;
+/** Links shown before the category links (not categories themselves). */
+const FIXED_NAV: NavItem[] = [{ label: "Best Sellers", href: "/shop?sort=best-sellers" }];
 
 /**
- * MAIN_NAV with dropdowns filled from the catalogue: a category link whose category has
- * sub-categories gets one entry per sub-category plus "All <name>". New sub-categories
- * added in the admin appear automatically. Falls back to the plain nav if the API is down.
+ * The header menu, built from the categories in the admin: every top-level category becomes a
+ * menu link (in the admin's sort order), and one with sub-categories gets a dropdown listing
+ * them plus "All <name>". New categories appear automatically. Falls back to the static
+ * MAIN_NAV if the API is down.
  */
 export async function getMainNav(): Promise<NavItem[]> {
   let categories: Awaited<ReturnType<typeof getCategories>>;
@@ -17,20 +19,21 @@ export async function getMainNav(): Promise<NavItem[]> {
     return MAIN_NAV;
   }
 
-  return MAIN_NAV.map((item) => {
-    const slug = item.href.match(CATEGORY_HREF)?.[1];
-    const subCategories = slug ? categories.filter((c) => c.parentSlug === slug) : [];
-    if (subCategories.length === 0) return item;
-    return {
-      ...item,
-      children: [
-        ...subCategories.map((c) => ({ label: c.name, href: `/shop/${c.slug}`, image: c.image })),
-        {
-          label: `All ${item.label}`,
-          href: item.href,
-          image: categories.find((c) => c.slug === slug)?.image,
-        },
-      ],
-    };
-  });
+  const categoryLinks = categories
+    .filter((c) => c.parentSlug === null)
+    .map((parent): NavItem => {
+      const href = `/shop/${parent.slug}`;
+      const subCategories = categories.filter((c) => c.parentSlug === parent.slug);
+      if (subCategories.length === 0) return { label: parent.name, href };
+      return {
+        label: parent.name,
+        href,
+        children: [
+          ...subCategories.map((c) => ({ label: c.name, href: `/shop/${c.slug}`, image: c.image })),
+          { label: `All ${parent.name}`, href, image: parent.image },
+        ],
+      };
+    });
+
+  return [...FIXED_NAV, ...categoryLinks];
 }

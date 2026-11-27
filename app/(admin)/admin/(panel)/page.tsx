@@ -28,6 +28,11 @@ const SECTIONS = [
     text: "Shop menu categories and sub-categories with their images.",
   },
   { href: "/admin/collections", title: "Collections", text: "Group products into collections." },
+  {
+    href: "/admin/shapes",
+    title: "Stone shapes",
+    text: "Shape photos, descriptions and order for the home page “Shop ring by shape” section.",
+  },
 ] as const;
 
 export default function AdminDashboardPage() {

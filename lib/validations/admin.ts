@@ -6,6 +6,8 @@ import {
   PRODUCT_STATUSES,
   PRODUCT_TYPES,
   type AdminCategory,
+  type AdminStyle,
+  type AdminShape,
   type AdminCollection,
   type AdminProduct,
   type StonePrice,
@@ -66,6 +68,65 @@ export const toCategoryPayload = (v: CategoryValues) => ({
   image: nullIfEmpty(v.image),
 });
 export type CategoryPayload = ReturnType<typeof toCategoryPayload>;
+
+/* -------------------------------- Styles ------------------------------- */
+
+/** Style and shape tiles also accept a photo stored in the site itself: `/images/<folder>/<file>`. */
+const styleImage = z
+  .string()
+  .trim()
+  .refine(
+    (v) => v === "" || /^https:\/\/\S+$/.test(v) || /^\/images\/[\w\-./]+$/.test(v),
+    "Use https://… or /images/<folder>/<file name>",
+  );
+
+export const styleFormSchema = categorySchema
+  .pick({ name: true, slug: true, sort: true })
+  .extend({ image: styleImage, moissaniteImage: styleImage, moissaniteSort: num().int().min(0) });
+export type StyleValues = z.infer<typeof styleFormSchema>;
+
+export const styleDefaults = (s?: AdminStyle): StyleValues => ({
+  name: s?.name ?? "",
+  slug: s?.slug ?? "",
+  sort: s?.sort ?? 0,
+  image: s?.image ?? "",
+  moissaniteImage: s?.moissaniteImage ?? "",
+  moissaniteSort: s?.moissaniteSort ?? 0,
+});
+
+export const toStylePayload = (v: StyleValues) => ({
+  name: v.name,
+  slug: v.slug || undefined,
+  sort: v.sort,
+  image: nullIfEmpty(v.image),
+  moissaniteImage: nullIfEmpty(v.moissaniteImage),
+  moissaniteSort: v.moissaniteSort,
+});
+export type StylePayload = ReturnType<typeof toStylePayload>;
+
+/* -------------------------------- Shapes ------------------------------- */
+
+export const shapeFormSchema = categorySchema
+  .pick({ name: true, slug: true, sort: true })
+  .extend({ image: styleImage, description: optionalText(500) });
+export type ShapeValues = z.infer<typeof shapeFormSchema>;
+
+export const shapeDefaults = (s?: AdminShape): ShapeValues => ({
+  name: s?.name ?? "",
+  slug: s?.slug ?? "",
+  sort: s?.sort ?? 0,
+  image: s?.image ?? "",
+  description: s?.description ?? "",
+});
+
+export const toShapePayload = (v: ShapeValues) => ({
+  name: v.name,
+  slug: v.slug || undefined,
+  sort: v.sort,
+  image: nullIfEmpty(v.image),
+  description: nullIfEmpty(v.description),
+});
+export type ShapePayload = ReturnType<typeof toShapePayload>;
 
 /* ------------------------------ Collections ---------------------------- */
 

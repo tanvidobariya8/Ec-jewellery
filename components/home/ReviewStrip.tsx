@@ -9,13 +9,13 @@ type ReviewStripProps = {
 
 export function ReviewStrip({ reviews }: ReviewStripProps) {
   return (
-    <section className="py-16">
+    <section className="bg-section py-16">
       <Container>
         <SectionHeading eyebrow="Reviews" title="Loved around the world" />
         <ul className="grid gap-6 md:grid-cols-3">
           {reviews.map((review) => (
             <li key={review.id}>
-              <figure className="flex h-full flex-col border border-border bg-white/50 p-8">
+              <figure className="flex h-full flex-col border border-border bg-background p-8">
                 <Stars rating={review.rating} />
                 <blockquote className="mt-5 flex-1 font-serif text-lg leading-relaxed text-foreground">
                   “{review.body}”

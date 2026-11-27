@@ -57,7 +57,7 @@ export default function RingSizePage() {
             </thead>
             <tbody>
               {chart.map((row) => (
-                <tr key={row.us} className="border-b border-border even:bg-surface/30">
+                <tr key={row.us} className="border-b border-border even:bg-neutral-band">
                   <th scope="row" className="py-2.5 font-medium">
                     {row.us}
                   </th>

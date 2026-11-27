@@ -6,21 +6,26 @@
  * Change colours / fonts here only; components use the token classes (bg-primary, text-gold, font-serif…).
  */
 @theme {
-  --color-primary: #3a6447;
-  --color-primary-dark: #2c4d36;
+  /* "Emerald & ivory": deep emerald brand colour, white page, sage-mist bands, gold accents. */
+  /* One dark green everywhere: announcement bar, footer, buttons, headings. */
+  --color-primary: #143427;
+  --color-primary-dark: #0d241b; /* hover / pressed state only */
   --color-primary-foreground: #ffffff;
 
-  --color-background: #f8f5f0;
-  --color-surface: #efe6d8;
-  --color-surface-muted: #e8e1d6;
-  --color-border: #d9d2c5;
+  --color-background: #ffffff;
+  --color-surface: #f1f5f1; /* alternate section bands, image placeholders */
+  --color-surface-muted: #e3ebe4;
+  --color-neutral-band: #fbfbfb; /* soft off-white grey band (shop by shape) */
+  --color-section: #ecf5ef; /* fresh mint band for home sections (shape finder, reviews) and icon circles */
+  --color-banner: #f5e3d2; /* hero banner background */
+  --color-border: #dde4dd;
 
-  --color-foreground: #1f1f1f;
-  --color-muted: #5f5a52;
+  --color-foreground: #1c2420;
+  --color-muted: #57615b;
   /* gold: icons, lines, stars (decorative). Text must use gold-dark / gold-light (WCAG AA ≥ 4.5:1). */
-  --color-gold: #a8875a;
-  --color-gold-dark: #87683d; /* small text on cream backgrounds — 4.7:1 */
-  --color-gold-light: #e3d2b0; /* small text on primary green — 4.6:1 */
+  --color-gold: #b08d57;
+  --color-gold-dark: #85663a; /* small text on white / surface — 5.3:1 / 4.8:1 */
+  --color-gold-light: #e6d3ad; /* small text on primary green — 6.8:1 */
 
   --color-whatsapp: #25d366;
   --color-danger: #b42318;
