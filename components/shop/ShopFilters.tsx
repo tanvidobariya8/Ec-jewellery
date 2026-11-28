@@ -5,12 +5,16 @@ import { FilterPanel } from "@/components/shop/FilterPanel";
 import { FilterSelect, type FilterOption } from "@/components/shop/FilterSelect";
 import { FilterSidebar } from "@/components/shop/FilterSidebar";
 import { useShopFilters } from "@/hooks/useShopFilters";
+import type { ShapeTile } from "@/lib/api/catalog";
 import { PRODUCT_SORTS, SORT_LABELS } from "@/lib/search-params/shop";
 import { cn } from "@/lib/utils";
 
 type ShopFiltersProps = {
+  /** Breadcrumb + page title, above the filter sidebar. */
+  title: React.ReactNode;
   categories: FilterOption[];
-  shapes: FilterOption[];
+  /** Shapes with photos: shown as a photo grid in the sidebar. */
+  shapeTiles: ShapeTile[];
   styles: FilterOption[];
   /** Hide the category filter on category pages. */
   showCategory?: boolean;
@@ -27,8 +31,9 @@ const SORT_OPTIONS = PRODUCT_SORTS.map((sort) => ({ value: sort, label: SORT_LAB
  * State lives in the URL; changes re-render the server product list.
  */
 export function ShopFilters({
+  title,
   categories,
-  shapes,
+  shapeTiles,
   styles,
   showCategory = true,
   total,
@@ -36,7 +41,7 @@ export function ShopFilters({
 }: ShopFiltersProps) {
   const { sections, active, clearAll, sort, setSort, isPending } = useShopFilters({
     categories,
-    shapes,
+    shapes: shapeTiles.map((tile) => ({ value: tile.slug, label: tile.name, image: tile.image })),
     styles,
     showCategory,
   });
@@ -46,15 +51,19 @@ export function ShopFilters({
   );
 
   return (
-    <div className="lg:grid lg:grid-cols-[15rem_1fr] lg:gap-10">
-      <aside aria-label="Filters" className="hidden lg:block">
-        <div className="sticky top-48 max-h-[calc(100vh-13rem)] overflow-y-auto pr-2">
-          {sidebar}
-        </div>
-      </aside>
+    <div className="lg:grid lg:grid-cols-[15rem_1fr] lg:gap-x-8">
+      {/* Title sits above the filters, so the count / sort bar lines up with the breadcrumb. */}
+      <div className="lg:flex lg:flex-col">
+        {title}
+        <aside aria-label="Filters" className="hidden lg:block lg:flex-1">
+          <div className="sticky top-48 max-h-[calc(100vh-13rem)] overflow-y-auto pr-2">
+            {sidebar}
+          </div>
+        </aside>
+      </div>
 
       <div className="min-w-0">
-        <div className="flex flex-col gap-4 border-b border-border pb-5">
+        <div className="flex flex-col gap-3 border-b border-border pb-4">
           <div className="flex flex-wrap items-center gap-3">
             <FilterPanel activeCount={active.length}>{sidebar}</FilterPanel>
             <p className="text-xs tracking-label text-muted uppercase" aria-live="polite">

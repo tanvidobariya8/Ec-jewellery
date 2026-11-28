@@ -132,3 +132,19 @@ export const REVIEWS: Review[] = [
     product: "Wedding Bands",
   },
 ];
+
+/** "Get personalized guidance" banner on the home page (photos are the client's own). */
+export const GUIDANCE_BANNER = {
+  heading: "Get Personalized Guidance from Our Experts",
+  subtext:
+    "Whether you're designing a custom ring or need help choosing the perfect piece, schedule a 1-on-1 consultation and let us assist you.",
+  ctaLabel: "Book Virtual Appointment",
+  whatsappMessage: "Hello Eco Friendly Jewellery, I would like to book a virtual appointment.",
+  images: [
+    { src: "/images/guidance/jeweller-at-work.png", alt: "Our jeweller setting a stone by hand" },
+    {
+      src: "/images/guidance/couple-rings.png",
+      alt: "A couple wearing a gold band and an oval engagement ring set",
+    },
+  ],
+} as const;

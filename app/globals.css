@@ -29,6 +29,13 @@
 
   --color-whatsapp: #25d366;
   --color-danger: #b42318;
+  /* Metal swatches on the product page (gradient light → dark) */
+  --color-metal-yellow: #f3dc9a;
+  --color-metal-yellow-dark: #c9a24f;
+  --color-metal-white: #f4f4f4;
+  --color-metal-white-dark: #b9bcbf;
+  --color-metal-rose: #f6cdb8;
+  --color-metal-rose-dark: #d08b6c;
 
   --font-serif: var(--font-cormorant), "Times New Roman", serif;
   --font-sans: var(--font-montserrat), ui-sans-serif, system-ui, sans-serif;

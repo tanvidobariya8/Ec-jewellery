@@ -6,10 +6,10 @@ type ShopTitleProps = {
   crumbs: { label: string; href: string }[];
 };
 
-/** Compact breadcrumb + page title shown above the shop filters and grid. */
+/** Breadcrumb above the shop filters, with a visually hidden page title (h1). */
 export function ShopTitle({ title, crumbs }: ShopTitleProps) {
   return (
-    <div className="mb-8">
+    <div className="mb-4">
       <nav aria-label="Breadcrumb">
         <ol className="flex flex-wrap items-center gap-1.5 text-xs text-muted">
           {crumbs.map((crumb) => (
@@ -25,7 +25,8 @@ export function ShopTitle({ title, crumbs }: ShopTitleProps) {
           </li>
         </ol>
       </nav>
-      <h1 className="mt-3 font-serif text-3xl text-primary">{title}</h1>
+      {/* Breadcrumb already names the page; the h1 stays for SEO / screen readers only. */}
+      <h1 className="sr-only">{title}</h1>
     </div>
   );
 }

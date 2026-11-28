@@ -1,6 +1,7 @@
 import { BestSellers } from "@/components/home/BestSellers";
 import { CategoryGrid } from "@/components/home/CategoryGrid";
 import { CustomBanner } from "@/components/home/CustomBanner";
+import { GuidanceBanner } from "@/components/home/GuidanceBanner";
 import { HeroBanner } from "@/components/home/HeroBanner";
 import { ReviewStrip } from "@/components/home/ReviewStrip";
 import { ShopByShape } from "@/components/home/ShopByShape";
@@ -74,6 +75,7 @@ export default function HomePage() {
       <WhyLabGrown />
       <CustomBanner />
       <HomeCategories />
+      <GuidanceBanner />
       <ReviewStrip reviews={REVIEWS} />
       <TrustBadges />
     </>

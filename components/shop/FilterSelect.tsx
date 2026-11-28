@@ -8,7 +8,8 @@ import { cn } from "@/lib/utils";
 /** Radix Select cannot use "" as a value, so "all" stands for "no filter". */
 export const ALL = "all";
 
-export type FilterOption = { value: string; label: string };
+/** `image` turns a sidebar section into a photo grid (e.g. shapes). */
+export type FilterOption = { value: string; label: string; image?: string | null };
 
 type FilterSelectProps = {
   label: string;

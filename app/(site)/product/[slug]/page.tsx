@@ -5,9 +5,9 @@ import { Suspense } from "react";
 
 import { ProductConfigurator } from "@/components/product/ProductConfigurator";
 import { ProductGallery } from "@/components/product/ProductGallery";
+import { ProductHeader } from "@/components/product/ProductHeader";
 import { ProductSpecs } from "@/components/product/ProductSpecs";
 import { Container } from "@/components/ui/Container";
-import { Stars } from "@/components/ui/Stars";
 import { getProduct, getProductSlugs } from "@/lib/api/catalog";
 import type { ProductDetail } from "@/lib/api/schemas";
 import { SITE } from "@/lib/constants";
@@ -83,21 +83,7 @@ export default async function ProductPage({ params }: PageProps<"/product/[slug]
           <ProductGallery name={product.name} media={product.media} />
 
           <div>
-            {product.collection && (
-              <p className="text-xs tracking-label text-gold-dark uppercase">
-                {product.collection.name} collection
-              </p>
-            )}
-            <h1 className="mt-2 text-3xl leading-tight sm:text-4xl">{product.name}</h1>
-            {product.rating.count > 0 && product.rating.average !== null && (
-              <div className="mt-3 flex items-center gap-2 text-xs text-muted">
-                <Stars rating={Math.round(product.rating.average)} />
-                {product.rating.count} {product.rating.count === 1 ? "review" : "reviews"}
-              </div>
-            )}
-            {product.description && (
-              <p className="mt-5 leading-relaxed text-muted">{product.description}</p>
-            )}
+            <ProductHeader product={product} />
 
             <div className="mt-8">
               <Suspense fallback={<div className="h-80 animate-pulse bg-surface/60" />}>

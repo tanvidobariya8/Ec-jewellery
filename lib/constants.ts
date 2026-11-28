@@ -204,6 +204,7 @@ export const METALS: Metal[] = [
   { code: "18K_WHITE", name: "18K White Gold", purity: "75%" },
   { code: "18K_ROSE", name: "18K Rose Gold", purity: "75%" },
   { code: "PT950", name: "950 Platinum", purity: "95%" },
+  { code: "AG925", name: "925 Sterling Silver", purity: "92.5%" },
 ];
 
 export const STONE_TYPES: StoneType[] = [

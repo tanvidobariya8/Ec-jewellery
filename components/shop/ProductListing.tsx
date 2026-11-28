@@ -9,6 +9,8 @@ import { whatsappLink } from "@/lib/constants";
 import type { ShopFilters as Filters } from "@/lib/search-params/shop";
 
 type ProductListingProps = {
+  /** Breadcrumb + page title (ShopTitle). */
+  title: React.ReactNode;
   basePath: string;
   filters: Filters;
   /** Set on category pages: fixes the category and hides its filter. */
@@ -16,7 +18,7 @@ type ProductListingProps = {
 };
 
 /** Filter sidebar + product grid + pagination for /shop and /shop/[category]. */
-export async function ProductListing({ basePath, filters, category }: ProductListingProps) {
+export async function ProductListing({ title, basePath, filters, category }: ProductListingProps) {
   const query = category ? { ...filters, category } : filters;
   const [products, categories, shapes, styles] = await Promise.all([
     getProducts(query),
@@ -30,14 +32,20 @@ export async function ProductListing({ basePath, filters, category }: ProductLis
 
   return (
     <ShopFilters
+      title={title}
       categories={toOptions(categories)}
-      shapes={toOptions(shapes)}
+      shapeTiles={shapes.map((shape) => ({
+        slug: shape.slug,
+        name: shape.name,
+        image: shape.image ?? null,
+        description: shape.description ?? null,
+      }))}
       styles={toOptions(styles)}
       showCategory={!category}
       total={products.total}
     >
       {products.items.length > 0 ? (
-        <ul className="mt-6 grid grid-cols-2 gap-x-4 gap-y-10 sm:grid-cols-3 sm:gap-x-6">
+        <ul className="mt-5 grid grid-cols-2 gap-x-4 gap-y-10 sm:grid-cols-3 sm:gap-x-6 xl:grid-cols-4">
           {products.items.map((product) => (
             <li key={product.id}>
               <ProductCard product={product} />
