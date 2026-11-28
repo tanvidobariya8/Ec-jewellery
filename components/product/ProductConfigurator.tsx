@@ -1,17 +1,20 @@
 "use client";
 
 import { MessageCircle } from "lucide-react";
+import Link from "next/link";
 import { useQueryStates } from "nuqs";
 
-import { OptionGroup } from "@/components/product/OptionGroup";
+import { MetalPicker } from "@/components/product/MetalPicker";
+import { StonePicker } from "@/components/product/StonePicker";
 import { FilterSelect } from "@/components/shop/FilterSelect";
 import { Button } from "@/components/ui/Button";
 import type { ProductDetail, StoneOption } from "@/lib/api/schemas";
 import { RING_SIZES, STONE_LABELS, whatsappLink } from "@/lib/constants";
+import { formatPrice } from "@/lib/currency";
 import { productSearchParams } from "@/lib/search-params/product";
 
 type ProductConfiguratorProps = {
-  product: Pick<ProductDetail, "name" | "metals" | "stoneOptions" | "hasRingSize">;
+  product: Pick<ProductDetail, "name" | "metals" | "stoneOptions" | "hasRingSize" | "prices">;
 };
 
 const SIZE_OPTIONS = RING_SIZES.map((size) => ({ value: String(size), label: `US ${size}` }));
@@ -22,8 +25,8 @@ const stoneLabel = (option: StoneOption) =>
     : `${STONE_LABELS[option.stoneType.code]} · ${option.stoneCount} × ${option.carat} ct`;
 
 /**
- * Metal / stone / ring-size selectors. Selections live in the URL.
- * Phase 3: call BE POST /pricing/quote with this config and show the live price.
+ * Price, metal (family tabs + karat swatches), stone (type tabs + carat sizes) and ring size.
+ * Selections live in the URL; the price is looked up in the BE price table (`product.prices`).
  */
 export function ProductConfigurator({ product }: ProductConfiguratorProps) {
   const [selection, setSelection] = useQueryStates(productSearchParams, {
@@ -44,38 +47,58 @@ export function ProductConfigurator({ product }: ProductConfiguratorProps) {
     size !== null && `ring size US ${size}`,
   ].filter(Boolean);
 
+  // Prices come from the BE per metal × centre stone; side stones are always included.
+  const centreId = stone?.isCenter ? stone.id : null;
+  const price =
+    product.prices.find((p) => p.metal === metal?.code && p.stone === centreId)?.priceInr ?? null;
+
   const enquiry = `Hello, I'm interested in the ${product.name}${
     summary.length ? ` (${summary.join(", ")})` : ""
-  }. Could you share the price?`;
+  }${price !== null ? `, listed at ${formatPrice(price, "INR")}. Could you help me order it?` : ". Could you share the price?"}`;
 
   return (
-    <div className="space-y-8">
-      {product.metals.length > 0 && (
-        <OptionGroup
-          label="Metal"
-          value={metal?.code ?? null}
-          selectedLabel={metal?.name}
-          options={product.metals.map((m) => ({ value: m.code, label: m.code.replace("_", " ") }))}
+    <div className="space-y-7">
+      <div aria-live="polite">
+        {price !== null ? (
+          <>
+            <p className="text-2xl font-medium text-primary">{formatPrice(price, "INR")}</p>
+            <p className="mt-1 text-xs text-muted">For the selected metal and stone, excl. GST.</p>
+          </>
+        ) : (
+          <>
+            <p className="font-serif text-2xl text-primary">Price on request</p>
+            <p className="mt-1 text-xs text-muted">Message us for a quote on this design.</p>
+          </>
+        )}
+      </div>
+
+      {metal && (
+        <MetalPicker
+          metals={product.metals}
+          selected={metal}
           onChange={(code) => void setSelection({ metal: code })}
         />
       )}
 
-      {product.stoneOptions.length > 0 && (
-        <OptionGroup
-          label="Stone"
-          value={stone?.id ?? null}
-          selectedLabel={stone?.stoneType.grade ?? undefined}
-          options={product.stoneOptions.map((option) => ({
-            value: option.id,
-            label: stoneLabel(option),
-          }))}
+      {stone && (
+        <StonePicker
+          options={product.stoneOptions}
+          selected={stone}
           onChange={(id) => void setSelection({ stone: id })}
         />
       )}
 
       {product.hasRingSize && (
         <div>
-          <p className="mb-3 text-xs tracking-label uppercase">Ring size</p>
+          <div className="mb-3 flex items-center justify-between gap-4">
+            <p className="text-sm font-medium">Select Ring Size (US):</p>
+            <Link
+              href="/ring-size"
+              className="text-xs font-medium tracking-wide text-primary uppercase underline underline-offset-4"
+            >
+              Find ring size
+            </Link>
+          </div>
           <FilterSelect
             label="Size"
             value={size !== null ? String(size) : null}
@@ -86,19 +109,12 @@ export function ProductConfigurator({ product }: ProductConfiguratorProps) {
         </div>
       )}
 
-      <div className="border-t border-border pt-6">
-        <p className="text-xs tracking-label text-muted uppercase">Price</p>
-        <p className="mt-1 font-serif text-2xl">Price on request</p>
-        <p className="mt-2 text-sm text-muted">
-          Live pricing for your exact configuration is coming soon. Message us for a quote today.
-        </p>
-        <Button asChild size="lg" className="mt-5 w-full sm:w-auto">
-          <a href={whatsappLink(enquiry)} target="_blank" rel="noopener noreferrer">
-            <MessageCircle aria-hidden="true" className="size-4" />
-            Ask for a quote on WhatsApp
-          </a>
-        </Button>
-      </div>
+      <Button asChild size="lg" className="w-full">
+        <a href={whatsappLink(enquiry)} target="_blank" rel="noopener noreferrer">
+          <MessageCircle aria-hidden="true" className="size-4" />
+          {price !== null ? "Order on WhatsApp" : "Ask for a quote on WhatsApp"}
+        </a>
+      </Button>
     </div>
   );
 }

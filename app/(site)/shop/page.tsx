@@ -14,14 +14,19 @@ export const metadata: Metadata = {
 
 async function ShopResults({ searchParams }: Pick<PageProps<"/shop">, "searchParams">) {
   const filters = await loadShopSearchParams(searchParams);
-  return <ProductListing basePath="/shop" filters={filters} />;
+  return (
+    <ProductListing
+      title={<ShopTitle title="All Jewellery" crumbs={[{ label: "Home", href: "/" }]} />}
+      basePath="/shop"
+      filters={filters}
+    />
+  );
 }
 
 export default function ShopPage({ searchParams }: PageProps<"/shop">) {
   return (
-    <Container className="py-8">
-      <ShopTitle title="All Jewellery" crumbs={[{ label: "Home", href: "/" }]} />
-      <Suspense fallback={<ProductListingSkeleton />}>
+    <Container className="pt-5 pb-10">
+      <Suspense fallback={<ProductListingSkeleton withTitle />}>
         <ShopResults searchParams={searchParams} />
       </Suspense>
     </Container>

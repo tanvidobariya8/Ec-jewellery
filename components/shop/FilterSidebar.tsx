@@ -1,9 +1,10 @@
 "use client";
 
-import { ChevronDown } from "lucide-react";
+import { ChevronDown, X } from "lucide-react";
 import { Accordion } from "radix-ui";
 import { useState } from "react";
 
+import { FilterImageGrid } from "@/components/shop/FilterImageGrid";
 import { FilterRadioGroup } from "@/components/shop/FilterRadioGroup";
 import type { FilterSection } from "@/hooks/useShopFilters";
 
@@ -18,7 +19,7 @@ type FilterSidebarProps = {
   onClearAll: () => void;
 };
 
-/** "FILTERS / CLEAR ALL" header followed by every filter as a collapsible radio list. */
+/** "Clear all ×" (when a filter is applied) followed by every filter as a collapsible section. */
 export function FilterSidebar({ sections, hasActive, onClearAll }: FilterSidebarProps) {
   const defaultOpen = sections
     .filter((section, index) => index < OPEN_SECTIONS || section.value)
@@ -26,18 +27,18 @@ export function FilterSidebar({ sections, hasActive, onClearAll }: FilterSidebar
 
   return (
     <div>
-      <div className="flex items-center justify-between border-b border-border pb-4">
-        <h2 className="text-sm font-medium tracking-label uppercase">Filters</h2>
-        {hasActive && (
+      {hasActive && (
+        <div className="flex justify-end border-b border-border pb-3">
           <button
             type="button"
             onClick={onClearAll}
-            className="text-xs tracking-label text-primary uppercase underline-offset-4 hover:underline"
+            className="inline-flex items-center gap-1.5 text-xs tracking-label text-primary uppercase underline-offset-4 hover:underline"
           >
             Clear all
+            <X aria-hidden="true" className="size-3.5" />
           </button>
-        )}
-      </div>
+        </div>
+      )}
       <Accordion.Root type="multiple" defaultValue={defaultOpen}>
         {sections.map((section) => (
           <FilterSidebarSection key={section.id} section={section} />
@@ -51,8 +52,9 @@ function FilterSidebarSection({ section }: { section: FilterSection }) {
   const [expanded, setExpanded] = useState(false);
   const selected = section.options.find((o) => o.value === section.value);
   const selectedIndex = selected ? section.options.indexOf(selected) : -1;
-  // Never hide the selected option behind "+ N more".
-  const limit = Math.max(VISIBLE_OPTIONS, selectedIndex + 1);
+  const withImages = section.options.some((o) => o.image);
+  // Never hide the selected option behind "+ N more"; photo grids are compact, so show all.
+  const limit = withImages ? section.options.length : Math.max(VISIBLE_OPTIONS, selectedIndex + 1);
   const hidden = section.options.length - limit;
   const options = expanded || hidden <= 0 ? section.options : section.options.slice(0, limit);
 
@@ -77,12 +79,21 @@ function FilterSidebarSection({ section }: { section: FilterSection }) {
         </Accordion.Trigger>
       </Accordion.Header>
       <Accordion.Content className="pb-5">
-        <FilterRadioGroup
-          label={section.label}
-          value={section.value}
-          options={options}
-          onChange={section.onChange}
-        />
+        {withImages ? (
+          <FilterImageGrid
+            label={section.label}
+            value={section.value}
+            options={section.options}
+            onChange={section.onChange}
+          />
+        ) : (
+          <FilterRadioGroup
+            label={section.label}
+            value={section.value}
+            options={options}
+            onChange={section.onChange}
+          />
+        )}
         {hidden > 0 && (
           <button
             type="button"

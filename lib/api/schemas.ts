@@ -103,6 +103,10 @@ export const productDetailSchema = z.object({
     }),
   ),
   rating: z.object({ count: z.number(), average: z.number().nullable() }),
+  /** INR price per metal × centre stone, calculated by the BE. Empty = price on request. */
+  prices: z
+    .array(z.object({ metal: z.string(), stone: z.string().nullable(), priceInr: z.number() }))
+    .default([]),
   seo: z.object({ title: z.string().nullable(), description: z.string().nullable() }),
 });
 

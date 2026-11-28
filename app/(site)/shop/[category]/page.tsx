@@ -39,22 +39,26 @@ async function CategoryContent({
   const filters = await loadShopSearchParams(searchParams);
 
   return (
-    <>
-      <ShopTitle
-        title={category.name}
-        crumbs={[
-          { label: "Home", href: "/" },
-          { label: "Shop", href: "/shop" },
-        ]}
-      />
-      <ProductListing basePath={`/shop/${slug}`} filters={filters} category={slug} />
-    </>
+    <ProductListing
+      title={
+        <ShopTitle
+          title={category.name}
+          crumbs={[
+            { label: "Home", href: "/" },
+            { label: "Shop", href: "/shop" },
+          ]}
+        />
+      }
+      basePath={`/shop/${slug}`}
+      filters={filters}
+      category={slug}
+    />
   );
 }
 
 export default function CategoryPage({ params, searchParams }: PageProps<"/shop/[category]">) {
   return (
-    <Container className="py-8">
+    <Container className="pt-5 pb-10">
       <Suspense fallback={<ProductListingSkeleton withTitle />}>
         <CategoryContent params={params} searchParams={searchParams} />
       </Suspense>

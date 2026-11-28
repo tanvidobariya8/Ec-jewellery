@@ -4,7 +4,7 @@ import { useQueryStates } from "nuqs";
 import { useTransition } from "react";
 
 import type { FilterOption } from "@/components/shop/FilterSelect";
-import { METALS, STONE_LABELS } from "@/lib/constants";
+import { METALS, STONE_TYPES } from "@/lib/constants";
 import {
   CARAT_RANGES,
   PRODUCT_SORTS,
@@ -29,7 +29,7 @@ type UseShopFiltersArgs = {
   showCategory: boolean;
 };
 
-const STONE_OPTIONS = STONE_FILTERS.map((code) => ({ value: code, label: STONE_LABELS[code] }));
+const STONE_OPTIONS = STONE_TYPES.map((stone) => ({ value: stone.code, label: stone.name }));
 const METAL_OPTIONS = METALS.map((metal) => ({ value: metal.code, label: metal.name }));
 const CARAT_OPTIONS = CARAT_RANGES.map((range) => ({
   value: `${range.min ?? ""}-${range.max ?? ""}`,
@@ -126,5 +126,12 @@ export function useShopFilters({ categories, shapes, styles, showCategory }: Use
   const setSort = (sort: string | null) =>
     update({ sort: (sort ?? "featured") as (typeof PRODUCT_SORTS)[number] });
 
-  return { sections, active, clearAll, sort: filters.sort, setSort, isPending };
+  return {
+    sections,
+    active,
+    clearAll,
+    sort: filters.sort,
+    setSort,
+    isPending,
+  };
 }

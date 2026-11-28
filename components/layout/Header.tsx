@@ -13,7 +13,7 @@ export async function Header() {
   return (
     <header className="sticky top-0 z-40 bg-background/95 backdrop-blur-sm">
       <Container>
-        <div className="grid grid-cols-[1fr_auto_1fr] items-center py-3 md:py-5">
+        <div className="grid grid-cols-[1fr_auto_1fr] items-center py-3 md:py-4">
           <div className="flex items-center">
             <MobileMenu items={nav} />
             <CurrencySwitcher className="max-md:hidden" />

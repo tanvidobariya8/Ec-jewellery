@@ -28,9 +28,9 @@ export function ShopByStyle({ tabs }: ShopByStyleProps) {
   return (
     <section aria-label="Shop rings by style" className="bg-background py-16">
       <Container>
-        <SectionHeading title="Shop rings by style" />
+        <SectionHeading title="Shop rings by style" align="left" />
         <Tabs.Root defaultValue={visible[0].stone}>
-          <Tabs.List aria-label="Center stone" className="mb-8 flex justify-center gap-3">
+          <Tabs.List aria-label="Center stone" className="mb-8 flex gap-3">
             {visible.map((tab) => (
               <Tabs.Trigger
                 key={tab.stone}

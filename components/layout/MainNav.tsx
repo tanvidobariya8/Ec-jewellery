@@ -14,7 +14,7 @@ const LINK_CLASS =
 export function MainNav({ items }: { items: NavItem[] }) {
   return (
     <NavigationMenu.Root aria-label="Main" className="border-y border-border max-md:hidden">
-      <NavigationMenu.List className="flex items-center justify-center gap-10 py-3.5">
+      <NavigationMenu.List className="flex items-center justify-center gap-10 py-3">
         {items.map((item) => (
           <NavigationMenu.Item key={item.label} className="relative">
             {item.children ? (
@@ -31,7 +31,7 @@ export function MainNav({ items }: { items: NavItem[] }) {
                     className="size-3 transition-transform duration-300 group-data-[state=open]:rotate-180"
                   />
                 </NavigationMenu.Trigger>
-                <NavigationMenu.Content className="absolute top-full left-1/2 z-50 mt-3.5 min-w-52 -translate-x-1/2 border border-border bg-background py-2 shadow-sm">
+                <NavigationMenu.Content className="absolute top-full left-1/2 z-50 mt-3 min-w-52 -translate-x-1/2 border border-border bg-background py-2 shadow-sm">
                   <ul>
                     {item.children.map((child) => (
                       <li key={child.href}>
